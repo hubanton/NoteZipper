@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.noteLayout {
+  font-family: Roboto;
+  min-height: 93vh;
+  padding: 20px 0;
+  display: flex;
+}
+
+.page {
+  width: 100%;
+}
+
+.noteTitle {
+  font-size: 60px;
+  padding: 5px 0px;
+}
+
+@media (max-width: 768px) {
+  .noteTitle {
+    font-size: 40px;
+  }
+}

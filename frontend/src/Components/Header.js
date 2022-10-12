@@ -3,8 +3,15 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
+
+  function handleNavigate(destiny) {
+    navigate(`/${destiny}`);
+  }
+
   return (
     <Navbar
       className="shadow-lg"
@@ -15,8 +22,10 @@ function Header() {
     >
       <Container>
         <Navbar.Brand
-          style={{ fontSize: "26px", fontWeight: "bolder" }}
-          href="#home"
+          style={{ fontSize: "26px", fontWeight: "bolder", cursor: "pointer" }}
+          onClick={() => {
+            handleNavigate("");
+          }}
         >
           NoteZipper
         </Navbar.Brand>
@@ -32,7 +41,13 @@ function Header() {
             <Button variant="outline-success">Search</Button>
           </Form>
           <Nav>
-            <Nav.Link href="#deets">My Notes</Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                handleNavigate("notes");
+              }}
+            >
+              My Notes
+            </Nav.Link>
             <NavDropdown title="User" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">My profile</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Log out</NavDropdown.Item>
