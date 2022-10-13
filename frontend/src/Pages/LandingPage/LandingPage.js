@@ -1,6 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 import "./LandingPage.css";
 import paperNotes from "../../paper-notes.png";
@@ -14,12 +15,16 @@ const LandingPage = () => {
         </p>
         <img src={paperNotes} className="paperImg" alt="paperNotes"></img>
         <div className="buttonContainer">
-          <Button className="landingButton" variant="info" size="lg">
-            Log In
-          </Button>
-          <Button className="landingButton" variant="secondary" size="lg">
-            Register
-          </Button>
+          <Link to={"/login"}>
+            <Button className="landingButton" variant="info" size="lg">
+              Log In
+            </Button>
+          </Link>
+          <Link to={"/register"}>
+            <Button className="landingButton" variant="secondary" size="lg">
+              Register
+            </Button>
+          </Link>
         </div>
       </Container>
     </div>

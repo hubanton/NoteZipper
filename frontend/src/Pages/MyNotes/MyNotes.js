@@ -1,19 +1,19 @@
 import "./MyNotes.css";
 import { Link } from "react-router-dom";
-
+import { useEffect, useState } from "react";
 import React from "react";
 import { MainScreen } from "../../Components/MainScreen";
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
-import notes from "../../data/notes";
-import { useAccordionButton } from "react-bootstrap/AccordionButton";
+import { useAccordionToggle } from "react-bootstrap";
+import axios from "axios";
 
-function ContextAwareToggle({ note, eventKey, callback }) {
+function ContextAwareToggle({ note, eventKey, callback, notes }) {
   function handleDelete(noteID) {
     notes.filter((e) => e._id !== noteID);
     console.log("Hello");
   }
 
-  const decoratedOnClick = useAccordionButton(
+  const decoratedOnClick = useAccordionToggle(
     eventKey,
     () => callback && callback(eventKey)
   );
@@ -54,8 +54,20 @@ function ContextAwareToggle({ note, eventKey, callback }) {
 }
 
 const MyNotes = () => {
+  const [notes, setNotes] = useState();
+
+  useEffect(() => {
+    async function fetchNotes() {
+      const { data } = await axios.get("/api/notes");
+      console.log(data);
+      console.log("Hello");
+      setNotes(data);
+    }
+    fetchNotes();
+  }, []);
+
   return (
-    <MainScreen title="Bruh">
+    <MainScreen title="My Notes">
       <div style={{ textAlign: "right" }}>
         <Link to="/createnote">
           <Button variant="success" size="lg">
@@ -63,30 +75,36 @@ const MyNotes = () => {
           </Button>
         </Link>
       </div>
-      <Accordion className="mt-3" defaultActiveKey={notes[0]._id}>
-        {notes.map((note) => {
-          return (
-            <Card key={note._id} className="mb-4">
-              <Card.Header className="p-4">
-                <ContextAwareToggle eventKey={note._id} note={note} />
-              </Card.Header>
-              <Accordion.Collapse eventKey={note._id}>
-                <Card.Body className="p-4">
-                  <Badge bg="success" className="mb-2">
-                    Category - {note.category}
-                  </Badge>
-                  <blockquote className="blockquote mb-0">
-                    <p>{note.content}</p>
-                    <footer className="blockquote-footer">
-                      Created on {Date.now()}
-                    </footer>
-                  </blockquote>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          );
-        })}
-      </Accordion>
+      {notes && (
+        <Accordion className="mt-3" defaultActiveKey={notes[0]._id || 0}>
+          {notes.map((note) => {
+            return (
+              <Card key={note._id} className="mb-4">
+                <Card.Header className="p-4">
+                  <ContextAwareToggle
+                    eventKey={note._id}
+                    note={note}
+                    notes={notes}
+                  />
+                </Card.Header>
+                <Accordion.Collapse eventKey={note._id}>
+                  <Card.Body className="p-4">
+                    <Badge variant="success" className="mb-2">
+                      Category - {note.category}
+                    </Badge>
+                    <blockquote className="blockquote mb-0">
+                      <p>{note.content}</p>
+                      <footer className="blockquote-footer">
+                        Created on {Date.now()}
+                      </footer>
+                    </blockquote>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            );
+          })}
+        </Accordion>
+      )}
     </MainScreen>
   );
 };

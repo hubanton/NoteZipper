@@ -1,0 +1,6 @@
+.main {
+  display: flex;
+  align-items: center;
+  min-height: 93vh;
+  text-align: center;
+}
