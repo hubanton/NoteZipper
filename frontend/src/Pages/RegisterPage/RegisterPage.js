@@ -24,9 +24,13 @@ export const RegisterPage = () => {
 
   const navigate = useNavigate();
 
-  const userLogin = useSelector((state) => state.userRegister);
+  const userRegister = useSelector((state) => state.userRegister);
 
-  const { loading, error, userInfo } = userLogin;
+  const { loading, error } = userRegister;
+
+  const userLogin = useSelector((state) => state.userLogin);
+
+  const { userInfo } = userLogin;
 
   useEffect(() => {
     if (userInfo) {
