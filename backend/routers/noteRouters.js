@@ -17,6 +17,5 @@ router
   .get(protect, getNotebyId)
   .put(protect, updateNote)
   .delete(protect, deleteNote);
-//.put().delete();
 
 module.exports = router;

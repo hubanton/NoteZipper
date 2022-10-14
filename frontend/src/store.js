@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { noteListReducer, noteCreateReducer } from "./reducers/notesReducers";
 
 import { userLoginReducer, userRegisterReducer } from "./reducers/userReducers";
 
@@ -13,6 +14,8 @@ const initialState = {
 const rootReducer = {
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  noteList: noteListReducer,
+  noteCreate: noteCreateReducer,
 };
 
 const store = configureStore({
