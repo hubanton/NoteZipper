@@ -4,12 +4,24 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../actions/userActions";
 
 function Header() {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
+  //const userLogin = useSelector((state) => state.userLogin);
+  //const { userInfo } = userLogin;
+
   function handleNavigate(destiny) {
     navigate(`/${destiny}`);
+  }
+
+  function handleLogOut() {
+    dispatch(logout());
+    navigate("/");
   }
 
   return (
@@ -22,6 +34,7 @@ function Header() {
     >
       <Container>
         <Navbar.Brand
+          className=" text-success"
           style={{ fontSize: "26px", fontWeight: "bolder", cursor: "pointer" }}
           onClick={() => {
             handleNavigate("");
@@ -49,8 +62,14 @@ function Header() {
               My Notes
             </Nav.Link>
             <NavDropdown title="User" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">My profile</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Log out</NavDropdown.Item>
+              <NavDropdown.Item>My profile</NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  handleLogOut();
+                }}
+              >
+                Log out
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

@@ -1,47 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./LoginPage.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { MainScreen } from "../../Components/MainScreen";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import ErrorMessage from "../../Components/ErrorMessage";
 import Loading from "../../Components/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../actions/userActions";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+
+  const { loading, error, userInfo } = userLogin;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/notes");
+    }
+  }, [navigate, userInfo]);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      setIsLoading(true);
 
-      console.log(password);
-      console.log(email);
-      const { data } = await axios.post(
-        "/api/users/login",
-        {
-          email: email,
-          password: password,
-        },
-        config
-      );
-      localStorage.setItem("User Info", JSON.stringify(data));
-      console.log("Login Successful");
-      setError(false);
-    } catch (err) {
-      console.log(`Login failed ${err}`);
-      setError(err.response.data.message);
-    }
-    setIsLoading(false);
+    dispatch(login(email, password));
   }
 
   return (
@@ -58,9 +48,6 @@ export const LoginPage = () => {
             value={email}
             placeholder="Enter email"
           />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
@@ -73,7 +60,7 @@ export const LoginPage = () => {
             placeholder="Password"
           />
         </Form.Group>
-        {isLoading ? (
+        {loading ? (
           <Loading />
         ) : (
           <Button variant="primary" type="submit">
