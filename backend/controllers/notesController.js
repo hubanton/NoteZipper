@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 
 const getNotes = asyncHandler(async (req, res) => {
   const notes = await Note.find({ user: req.user._id }).sort([
-    ["createdAt", -1],
+    ["updatedAt", -1],
   ]);
   res.json(notes);
 });
@@ -38,9 +38,7 @@ const getNotebyId = asyncHandler(async (req, res) => {
   const note = await Note.findById(id);
 
   if (note) {
-    res.status(201).json({
-      note,
-    });
+    res.status(201).json(note);
   } else {
     res.status(400);
     throw new Error("Note does not exist");
@@ -97,7 +95,7 @@ const deleteNote = asyncHandler(async (req, res) => {
       throw new Error("You may not alter this note");
     }
   } else {
-    response.status(400);
+    res.status(400);
     throw new Error("Note does not exist");
   }
 });

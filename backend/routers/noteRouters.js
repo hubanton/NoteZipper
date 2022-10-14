@@ -14,7 +14,7 @@ router.route("/").get(protect, getNotes);
 router.route("/create").post(protect, createNote);
 router
   .route("/:id")
-  .get(protect, getNotebyId)
+  .get(getNotebyId)
   .put(protect, updateNote)
   .delete(protect, deleteNote);
 

@@ -9,7 +9,7 @@ import Loading from "../../Components/Loading";
 import { register } from "../../actions/userActions";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 export const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -144,6 +144,9 @@ export const RegisterPage = () => {
             Register
           </Button>
         )}
+        <div className="mt-2">
+          Already have an account? <Link to="/login">Log in</Link>
+        </div>
       </Form>
     </MainScreen>
   );

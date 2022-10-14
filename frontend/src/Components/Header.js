@@ -2,7 +2,6 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../actions/userActions";
@@ -44,16 +43,7 @@ function Header() {
         </Navbar.Brand>
         <Navbar.Toggle className="m-3" aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Form className="d-flex ms-auto me-auto">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-3"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
-          <Nav>
+          <Nav style={{ marginLeft: "auto" }}>
             <Nav.Link
               onClick={() => {
                 handleNavigate("notes");

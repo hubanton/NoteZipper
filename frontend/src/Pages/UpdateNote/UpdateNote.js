@@ -2,48 +2,63 @@ import React, { useEffect, useState } from "react";
 import { MainScreen } from "../../Components/MainScreen";
 import { Button, Card, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { createNoteAction } from "../../actions/notesActions";
+import { deleteNoteAction, updateNoteAction } from "../../actions/notesActions";
 
 import { useNavigate } from "react-router-dom";
 
 import Loading from "../../Components/Loading";
 import ErrorMessage from "../../Components/ErrorMessage";
 import ReactMarkdown from "react-markdown";
+import axios from "axios";
+import { useParams } from "react-router";
 
-function CreateNote() {
+function UpdateNote() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
+  const [updateDate, setUpdateDate] = useState("");
 
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const noteCreate = useSelector((state) => state.noteCreate);
-  const { loading, error, note } = noteCreate;
+  const noteUpdate = useSelector((state) => state.noteUpdate);
+  const { loading, error } = noteUpdate;
+  const { id } = useParams();
 
-  console.log(note);
+  useEffect(() => {
+    async function fetchNote() {
+      console.log(id);
+      const { data } = await axios.get(`/api/notes/${id}`);
+      setTitle(data.title);
+      setContent(data.content);
+      setCategory(data.category);
+      setUpdateDate(data.updatedAt);
+    }
 
-  const resetHandler = () => {
-    setTitle("");
-    setCategory("");
-    setContent("");
+    fetchNote();
+  }, [id]);
+
+  const handleDelete = (e) => {
+    if (window.confirm("Are you sure?")) {
+      dispatch(deleteNoteAction(id));
+      navigate("/notes");
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createNoteAction(title, content, category));
+    dispatch(updateNoteAction(title, content, category, id));
     if (!title || !content || !category) return;
 
-    resetHandler();
     navigate("/notes");
   };
 
   useEffect(() => {}, []);
 
   return (
-    <MainScreen title="Create a Note">
-      <Card className="bg-dark" border="success">
+    <MainScreen title="Updated your Note">
+      <Card border="info" className="bg-dark">
         <Card.Body>
           <Form onSubmit={handleSubmit}>
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
@@ -70,7 +85,7 @@ function CreateNote() {
             {content && (
               <Card className="bg-dark">
                 <Card.Header>Note Preview</Card.Header>
-                <Card.Body style={{ color: "lightgreen" }}>
+                <Card.Body style={{ color: "lightblue" }}>
                   <ReactMarkdown>{content}</ReactMarkdown>
                 </Card.Body>
               </Card>
@@ -89,21 +104,21 @@ function CreateNote() {
               <Loading />
             ) : (
               <Button type="submit" variant="primary">
-                Create Note
+                Update Note
               </Button>
             )}
-            <Button className="mx-3" onClick={resetHandler} variant="danger">
-              Reset Fields
+            <Button className="mx-3" onClick={handleDelete} variant="danger">
+              Delete Note
             </Button>
           </Form>
         </Card.Body>
 
         <Card.Footer>
-          Creation Date - {new Date().toLocaleDateString("de-DE")}
+          Last updated on - {new Date(updateDate).toLocaleDateString("de-DE")}
         </Card.Footer>
       </Card>
     </MainScreen>
   );
 }
 
-export default CreateNote;
+export default UpdateNote;
