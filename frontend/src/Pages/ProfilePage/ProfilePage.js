@@ -169,7 +169,7 @@ export const ProfilePage = () => {
                 <img
                   style={{
                     height: "auto",
-                    width: "80%",
+                    width: "60%",
                     objectFit: "contain",
                   }}
                   src={pic}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
@@ -6,6 +6,8 @@ import "./LandingPage.css";
 import paperNotes from "../../paper-notes.png";
 const LandingPage = () => {
   const userInfo = localStorage.getItem("userInfo");
+
+  useEffect(() => {}, [userInfo]);
 
   return (
     <div className="main">
