@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MainScreen } from "../../Components/MainScreen";
-import { Col, Row, Button, Form, Spinner, Alert } from "react-bootstrap";
+import { Col, Row, Button, Form, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorMessage from "../../Components/ErrorMessage";
 import { useNavigate } from "react-router-dom";
@@ -65,7 +65,6 @@ export const ProfilePage = () => {
 
   return (
     <>
-      (
       <MainScreen title="Edit Profile">
         {loading ? (
           <div
@@ -86,11 +85,6 @@ export const ProfilePage = () => {
             <Row className="profileContainer">
               <Col md={6} className="mt-3">
                 <Form onSubmit={handleSubmit} style={{ marginTop: "0px" }}>
-                  {success && (
-                    <Alert variant="success">
-                      Changes applied successfully
-                    </Alert>
-                  )}
                   {error && (
                     <ErrorMessage variant="danger">{error}</ErrorMessage>
                   )}
@@ -175,7 +169,7 @@ export const ProfilePage = () => {
                 <img
                   style={{
                     height: "auto",
-                    width: "90%",
+                    width: "80%",
                     objectFit: "contain",
                   }}
                   src={pic}
@@ -187,7 +181,6 @@ export const ProfilePage = () => {
           </div>
         )}
       </MainScreen>
-      )
     </>
   );
 };
