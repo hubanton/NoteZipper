@@ -43,7 +43,7 @@ export const RegisterPage = () => {
     if (password !== passwordConfirm) {
       setErrorMessage("Passwords do not match");
     } else {
-      dispatch(register(password, email, name, pic));
+      dispatch(register(name, email, password, pic));
     }
   }
 

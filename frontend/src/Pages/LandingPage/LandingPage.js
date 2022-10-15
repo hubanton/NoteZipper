@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./LandingPage.css";
 import paperNotes from "../../paper-notes.png";
 const LandingPage = () => {
-  const userInfo = localStorage.getItem("userInfo");
-
-  useEffect(() => {}, [userInfo]);
-
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   return (
     <div className="main">
       <Container>

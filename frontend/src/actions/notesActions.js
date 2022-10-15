@@ -54,8 +54,6 @@ export const createNoteAction =
       const {
         userLogin: { userInfo },
       } = getState();
-
-      console.log(userInfo.token);
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +90,6 @@ export const updateNoteAction =
         userLogin: { userInfo },
       } = getState();
 
-      console.log(userInfo.token);
       const config = {
         headers: {
           "Content-Type": "application/json",
