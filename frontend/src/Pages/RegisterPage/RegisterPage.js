@@ -16,7 +16,7 @@ export const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [errorMessage, setErrorMessage] = useState(false);
-  const [img, setImg] = useState(
+  const [pic, setPic] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
   );
 
@@ -43,7 +43,7 @@ export const RegisterPage = () => {
     if (password !== passwordConfirm) {
       setErrorMessage("Passwords do not match");
     } else {
-      dispatch(register(password, email, name, img));
+      dispatch(register(password, email, name, pic));
     }
   }
 
@@ -60,7 +60,7 @@ export const RegisterPage = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          setImg(data.url.toString());
+          setPic(data.url.toString());
         })
         .catch((err) => {
           console.log(err);

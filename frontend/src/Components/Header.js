@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
 
 function Header() {
@@ -11,8 +11,8 @@ function Header() {
 
   const dispatch = useDispatch();
 
-  //const userLogin = useSelector((state) => state.userLogin);
-  //const { userInfo } = userLogin;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   function handleNavigate(destiny) {
     navigate(`/${destiny}`);
@@ -43,25 +43,44 @@ function Header() {
         </Navbar.Brand>
         <Navbar.Toggle className="m-3" aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav style={{ marginLeft: "auto" }}>
-            <Nav.Link
-              onClick={() => {
-                handleNavigate("notes");
-              }}
-            >
-              My Notes
-            </Nav.Link>
-            <NavDropdown title="User" id="collasible-nav-dropdown">
-              <NavDropdown.Item>My profile</NavDropdown.Item>
-              <NavDropdown.Item
+          {userInfo ? (
+            <Nav style={{ marginLeft: "auto" }}>
+              <Nav.Link
                 onClick={() => {
-                  handleLogOut();
+                  handleNavigate("notes");
                 }}
               >
-                Log out
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
+                My Notes
+              </Nav.Link>
+              <NavDropdown title={userInfo?.name} id="collasible-nav-dropdown">
+                <NavDropdown.Item
+                  onClick={() => {
+                    handleNavigate("profile");
+                  }}
+                >
+                  My profile
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item
+                  style={{ color: "tomato" }}
+                  onClick={() => {
+                    handleLogOut();
+                  }}
+                >
+                  Log out
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          ) : (
+            <Nav.Link
+              onClick={() => {
+                handleNavigate("login");
+              }}
+              style={{ marginLeft: "auto" }}
+            >
+              Log In
+            </Nav.Link>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -8,6 +8,7 @@ import { LoginPage } from "./Pages/LoginPage/LoginPage";
 import { RegisterPage } from "./Pages/RegisterPage/RegisterPage";
 import CreateNote from "./Pages/CreateNote/CreateNote";
 import UpdateNote from "./Pages/UpdateNote/UpdateNote";
+import { ProfilePage } from "./Pages/ProfilePage/ProfilePage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/createnote" element={<CreateNote />} />
             <Route path="/notes/:id" element={<UpdateNote />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </main>
         <Footer />

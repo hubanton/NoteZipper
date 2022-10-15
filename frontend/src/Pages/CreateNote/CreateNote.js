@@ -20,10 +20,7 @@ function CreateNote() {
   const dispatch = useDispatch();
 
   const noteCreate = useSelector((state) => state.noteCreate);
-  const { loading, error, note } = noteCreate;
-
-  console.log(note);
-
+  const { loading, error } = noteCreate;
   const resetHandler = () => {
     setTitle("");
     setCategory("");

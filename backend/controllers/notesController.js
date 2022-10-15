@@ -27,7 +27,7 @@ const createNote = asyncHandler(async (req, res) => {
       createdNote,
     });
   } else {
-    response.status(400);
+    res.status(400);
     throw new Error("Error Occured");
   }
 });
@@ -87,7 +87,7 @@ const deleteNote = asyncHandler(async (req, res) => {
           deletedNote,
         });
       } else {
-        response.status(400);
+        res.status(400);
         throw new Error("Error Occured");
       }
     } else {

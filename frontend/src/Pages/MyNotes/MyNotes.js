@@ -109,82 +109,86 @@ const MyNotes = () => {
   ]);
 
   return (
-    <MainScreen title={`Hello ${userInfo.name}!`}>
-      <div style={{ textAlign: "right", marginBottom: "10px" }}>
-        <Form className="d-flex mb-3">
-          <Form.Control
-            type="search"
-            placeholder="Search Note"
-            className="w-25 me-auto"
-            aria-label="Search..."
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <Link to="/createnote">
-            <Button variant="success" size="lg">
-              Create new Note
-            </Button>
-          </Link>
-        </Form>
-      </div>
-      {errorDelete && <ErrorMessage>{errorDelete}</ErrorMessage>}
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-      {loading || loadingDelete ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Spinner
-            animation="border"
-            variant="primary"
-            style={{ width: "8rem", height: "8rem" }}
-          ></Spinner>
-        </div>
-      ) : (
-        notes && (
-          <Accordion className="mt-3" defaultActiveKey={notes[0]?._id}>
-            {notes
-              .filter((note) =>
-                note.title.toLowerCase().includes(search.toLowerCase())
-              )
-              .map((note) => {
-                return (
-                  <Card key={note._id} className="mb-4">
-                    <Card.Header className="p-4 bg-dark">
-                      <ContextAwareToggle
-                        eventKey={note._id}
-                        note={note}
-                        notes={notes}
-                      />
-                    </Card.Header>
-                    <Accordion.Collapse eventKey={note._id}>
-                      <Card.Body className="p-4">
-                        <span
-                          style={{ backgroundColor: "green" }}
-                          className="mb-2 badge"
-                        >
-                          Category - {note.category}
-                        </span>
-                        <blockquote className="blockquote mb-0">
-                          <p>{note.content}</p>
-                          <footer className="blockquote-footer">
-                            Created on{" "}
-                            {new Date(note.createdAt).toLocaleDateString(
-                              "de-DE"
-                            )}
-                          </footer>
-                        </blockquote>
-                      </Card.Body>
-                    </Accordion.Collapse>
-                  </Card>
-                );
-              })}
-          </Accordion>
-        )
+    <>
+      {userInfo && (
+        <MainScreen title={`Hello ${userInfo?.name}!`}>
+          <div style={{ textAlign: "right", marginBottom: "10px" }}>
+            <Form className="d-flex mb-3">
+              <Form.Control
+                type="search"
+                placeholder="Search Note"
+                className="w-25 me-auto"
+                aria-label="Search..."
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <Link to="/createnote">
+                <Button variant="success" size="lg">
+                  Create new Note
+                </Button>
+              </Link>
+            </Form>
+          </div>
+          {errorDelete && <ErrorMessage>{errorDelete}</ErrorMessage>}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {loading || loadingDelete ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Spinner
+                animation="border"
+                variant="primary"
+                style={{ width: "8rem", height: "8rem" }}
+              ></Spinner>
+            </div>
+          ) : (
+            notes && (
+              <Accordion className="mt-3" defaultActiveKey={notes[0]?._id}>
+                {notes
+                  .filter((note) =>
+                    note.title.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((note) => {
+                    return (
+                      <Card key={note._id} className="mb-4">
+                        <Card.Header className="p-4 bg-dark">
+                          <ContextAwareToggle
+                            eventKey={note._id}
+                            note={note}
+                            notes={notes}
+                          />
+                        </Card.Header>
+                        <Accordion.Collapse eventKey={note._id}>
+                          <Card.Body className="p-4">
+                            <span
+                              style={{ backgroundColor: "green" }}
+                              className="mb-2 badge"
+                            >
+                              Category - {note.category}
+                            </span>
+                            <blockquote className="blockquote mb-0">
+                              <p>{note.content}</p>
+                              <footer className="blockquote-footer">
+                                Created on{" "}
+                                {new Date(note.createdAt).toLocaleDateString(
+                                  "de-DE"
+                                )}
+                              </footer>
+                            </blockquote>
+                          </Card.Body>
+                        </Accordion.Collapse>
+                      </Card>
+                    );
+                  })}
+              </Accordion>
+            )
+          )}
+        </MainScreen>
       )}
-    </MainScreen>
+    </>
   );
 };
 
