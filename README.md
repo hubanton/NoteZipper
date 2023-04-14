@@ -27,5 +27,3 @@ User Profile
 Note overview
 ![n4](https://raw.githubusercontent.com/hubanton/NoteZipper/master/documentation/n4.PNG)
 
-# A deployed version can be found here: https://notezipper-application.herokuapp.com/
-
